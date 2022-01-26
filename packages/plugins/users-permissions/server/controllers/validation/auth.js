@@ -1,6 +1,7 @@
 'use strict';
 
 const { yup, validateYupSchema } = require('@strapi/utils');
+const { isEmail } = require('../../utils');
 
 const callbackBodySchema = yup.object().shape({
   identifier: yup.string().required(),
@@ -8,6 +9,14 @@ const callbackBodySchema = yup.object().shape({
 });
 
 const registerBodySchema = yup.object().shape({
+  username: yup
+    .string()
+    .nullable()
+    .test({
+      name: 'notEmail',
+      message: 'The username cannot be an email',
+      test: value => !isEmail(value),
+    }),
   email: yup
     .string()
     .email()

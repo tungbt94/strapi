@@ -10,7 +10,7 @@
 const crypto = require('crypto');
 const _ = require('lodash');
 const utils = require('@strapi/utils');
-const { getService } = require('../utils');
+const { getService, isEmail } = require('../utils');
 const {
   validateCallbackBody,
   validateRegisterBody,
@@ -19,8 +19,6 @@ const {
 
 const { sanitize } = utils;
 const { ApplicationError, ValidationError } = utils.errors;
-
-const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const sanitizeUser = (user, ctx) => {
   const { auth } = ctx.state;
@@ -45,11 +43,7 @@ module.exports = {
 
       const query = { provider };
 
-      // Check if the provided identifier is an email or not.
-      const isEmail = emailRegExp.test(params.identifier);
-
-      // Set the identifier to the appropriate query field.
-      if (isEmail) {
+      if (isEmail(params.identifier)) {
         query.email = params.identifier.toLowerCase();
       } else {
         query.username = params.identifier;
@@ -200,10 +194,7 @@ module.exports = {
   async forgotPassword(ctx) {
     let { email } = ctx.request.body;
 
-    // Check if the provided email is valid or not.
-    const isEmail = emailRegExp.test(email);
-
-    if (isEmail) {
+    if (isEmail(email)) {
       email = email.toLowerCase();
     } else {
       throw new ValidationError('Please provide a valid email address');
@@ -315,10 +306,7 @@ module.exports = {
       throw new ApplicationError('Impossible to find the default role');
     }
 
-    // Check if the provided email is valid or not.
-    const isEmail = emailRegExp.test(params.email);
-
-    if (isEmail) {
+    if (isEmail(params.email)) {
       params.email = params.email.toLowerCase();
     } else {
       throw new ValidationError('Please provide a valid email address');
@@ -410,9 +398,7 @@ module.exports = {
 
     await validateSendEmailConfirmationBody(params);
 
-    const isEmail = emailRegExp.test(params.email);
-
-    if (isEmail) {
+    if (isEmail(params.email)) {
       params.email = params.email.toLowerCase();
     } else {
       throw new ValidationError('wrong.email');
