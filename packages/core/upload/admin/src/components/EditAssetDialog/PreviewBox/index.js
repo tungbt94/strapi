@@ -143,41 +143,46 @@ export const PreviewBox = ({
           />
         )}
 
-        <ActionRow paddingLeft={3} paddingRight={3} justifyContent="flex-end">
-          <Stack size={1} horizontal>
-            {canUpdate && !asset.isLocal && (
-              <IconButton
-                label={formatMessage({
-                  id: getTrad('app.utils.delete'),
-                  defaultMessage: 'Delete',
-                })}
-                icon={<Trash />}
-                onClick={() => setShowConfirmDialog(true)}
-              />
-            )}
+        {!isInCroppingMode && (
+          <ActionRow paddingLeft={3} paddingRight={3} justifyContent="flex-end">
+            <Stack size={1} horizontal>
+              {canUpdate && !asset.isLocal && (
+                <IconButton
+                  label={formatMessage({
+                    id: getTrad('app.utils.delete'),
+                    defaultMessage: 'Delete',
+                  })}
+                  icon={<Trash />}
+                  onClick={() => setShowConfirmDialog(true)}
+                />
+              )}
 
-            {canDownload && (
-              <IconButton
-                label={formatMessage({
-                  id: getTrad('control-card.download'),
-                  defaultMessage: 'Download',
-                })}
-                icon={<DownloadIcon />}
-                onClick={() => downloadFile(assetUrl, asset.name)}
-              />
-            )}
+              {canDownload && (
+                <IconButton
+                  label={formatMessage({
+                    id: getTrad('control-card.download'),
+                    defaultMessage: 'Download',
+                  })}
+                  icon={<DownloadIcon />}
+                  onClick={() => downloadFile(assetUrl, asset.name)}
+                />
+              )}
 
-            {canCopyLink && <CopyLinkButton url={assetUrl} />}
+              {canCopyLink && <CopyLinkButton url={assetUrl} />}
 
-            {canUpdate && asset.mime.includes(AssetType.Image) && (
-              <IconButton
-                label={formatMessage({ id: getTrad('control-card.crop'), defaultMessage: 'Crop' })}
-                icon={<Resize />}
-                onClick={handleCropStart}
-              />
-            )}
-          </Stack>
-        </ActionRow>
+              {canUpdate && asset.mime.includes(AssetType.Image) && (
+                <IconButton
+                  label={formatMessage({
+                    id: getTrad('control-card.crop'),
+                    defaultMessage: 'Crop',
+                  })}
+                  icon={<Resize />}
+                  onClick={handleCropStart}
+                />
+              )}
+            </Stack>
+          </ActionRow>
+        )}
 
         <Wrapper>
           {/* This one is for editting an asset */}
@@ -202,6 +207,7 @@ export const PreviewBox = ({
         </Wrapper>
 
         <ActionRow
+          bottom={0}
           paddingLeft={2}
           paddingRight={2}
           justifyContent="flex-end"

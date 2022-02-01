@@ -18,8 +18,8 @@ const getDimensions = buffer =>
     .catch(() => ({})); // ignore errors
 
 const THUMBNAIL_RESIZE_OPTIONS = {
-  width: 245,
-  height: 156,
+  width: 490,
+  height: 312,
   fit: 'inside',
 };
 

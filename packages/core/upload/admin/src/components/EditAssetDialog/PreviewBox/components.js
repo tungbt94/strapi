@@ -33,14 +33,17 @@ export const Wrapper = styled.div`
 export const ActionRow = styled(Flex)`
   height: ${52 / 16}rem;
   background-color: ${({ blurry }) => (blurry ? `rgba(33, 33, 52, 0.4)` : undefined)};
+  position: absolute;
+  width: 100%;
+  z-index: 1;
 `;
 
 export const CroppingActionRow = styled(Flex)`
-  z-index: 1;
+  background-color: rgba(33, 33, 52, 0.4);
   height: ${52 / 16}rem;
   position: absolute;
-  background-color: rgba(33, 33, 52, 0.4);
   width: 100%;
+  z-index: 1;
 `;
 
 // TODO: fix in parts, this shouldn't happen
