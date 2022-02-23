@@ -118,7 +118,7 @@ const Wysiwyg = ({
       )
     : '';
 
-  const errorMessage = error ? formatMessage({ id: error, defaultMessage: error }) : '';
+  const errorMessage = error ? formatMessage(error) : '';
   const label = intlLabel.id
     ? formatMessage(
         { id: intlLabel.id, defaultMessage: intlLabel.defaultMessage },
