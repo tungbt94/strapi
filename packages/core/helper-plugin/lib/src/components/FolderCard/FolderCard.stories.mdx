@@ -1,0 +1,64 @@
+<!--- FolderCard.stories.mdx --->
+
+import { useState } from 'react';
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import { ArgsTable } from '@storybook/addon-docs';
+import { BaseLink } from '@strapi/design-system/BaseLink';
+import { Flex } from '@strapi/design-system/Flex';
+import { Stack } from '@strapi/design-system/Stack';
+import { Typography } from '@strapi/design-system/Typography';
+import { VisuallyHidden } from '@strapi/design-system/VisuallyHidden';
+import Pencil from '@strapi/icons/Pencil';
+
+import FolderCard from './FolderCard';
+import FolderCardBody from './FolderCardBody';
+import FolderCardCheckbox from './FolderCardCheckbox';
+import FolderCardLink from './FolderCardLink';
+
+<Meta title="components/FolderCard" component={FolderCard} />
+
+# FolderCard
+
+Used to display folders in the media library and the content manager.
+
+## Imports
+
+```js
+import {
+  FolderCard,
+  FolderCardBody,
+  FolderCardCheckbox,
+  FolderCardLink
+} from '@strapi/helper-plugin';
+```
+
+## Usage
+
+<Canvas>
+  <Story name="base">
+    {() => {
+        const [checked, setChecked] = useState(false);
+        return (
+            <FolderCard style={{ width: '310px' }} id="card-one" startAction={<FolderCardCheckbox value={checked} onValueChange={setChecked} />} ariaLabel="Pictures" onDoubleClick={() => console.log('Double click')}>
+                <FolderCardBody as="h2">
+                    <FolderCardLink href="https://strapi.io">
+                        <Flex direction="column" alignItems="flex-start">
+                            <Typography variant="omega" fontWeight="semiBold">
+                                Pictures
+                                <VisuallyHidden>:</VisuallyHidden>
+                            </Typography>
+                            <Typography variant="pi" textColor="neutral600">
+                                7 folders, 16 assets
+                            </Typography>
+                        </Flex>
+                    </FolderCardLink>
+                </FolderCardBody>
+            </FolderCard>
+        )
+    }}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable of={FolderCard} />
